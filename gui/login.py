@@ -21,7 +21,7 @@ class LoginWindow(ttk.Frame):
         self.login_success_callback = login_success_callback
 
         # ---- ĐẶT TIÊU ĐỀ VÀ KÍCH THƯỚC CHO MASTER (TOPLEVEL) TỪ ĐÂY ----
-        self.master.title("Đăng nhập Hệ thống Cân")
+        self.master.title("HỆ THỐNG CÂN TỰ ĐỘNG QNC")
         self.master.geometry("800x480")
         # ---- KẾT THÚC ĐẶT TIÊU ĐỀ VÀ KÍCH THƯỚC ----
         # Lưu ý: Việc Frame con đặt geometry cho Toplevel cha không phải là cách thực hành tốt nhất

@@ -147,6 +147,7 @@ class AdminWindow(ttk.Toplevel):
         except Exception as e:
             self.show_user_tab_status(f"Lỗi tải danh sách người dùng: {e}", DANGER)
 
+
     def on_user_select(self, event=None):
         """Xử lý khi chọn một người dùng từ Treeview."""
         selected_items = self.user_tree.selection()
@@ -440,6 +441,31 @@ class AdminWindow(ttk.Toplevel):
             self.driver_tab_status_label.config(text=message, bootstyle=style)
             self.after(6000, lambda: self.driver_tab_status_label.config(text="Chọn một lái xe để sửa hoặc xóa.", bootstyle=INFO) if self.winfo_exists() else None)
         else: print(f"Status (Driver Tab): {message}")
+
+    def refresh_driver_list(self):
+        """Làm mới danh sách lái xe trong Treeview."""
+        try:
+            # Bỏ chọn và vô hiệu hóa nút
+            self.selected_driver_id = None
+            if hasattr(self, 'edit_driver_button'):
+                self.edit_driver_button.config(state="disabled")
+            if hasattr(self, 'delete_driver_button'):
+                self.delete_driver_button.config(state="disabled")
+            selection = self.driver_tree.selection()
+            if selection:
+                self.driver_tree.selection_remove(selection)
+
+            for item in self.driver_tree.get_children():
+                self.driver_tree.delete(item)
+            drivers = get_all_nhan_su()
+            for driver in drivers:
+                self.driver_tree.insert("", tk.END, values=(
+                    driver['id'], driver['maNhanVien'], driver['maThe'],
+                    driver['tenNhanVien'], driver['trangThai']
+                ))
+            self.show_driver_tab_status("Đã tải danh sách lái xe.", INFO)
+        except Exception as e:
+            self.show_driver_tab_status(f"Lỗi tải danh sách lái xe: {e}", DANGER)
     # ----- KẾT THÚC CÁC HÀM QUẢN LÝ LÁI XE -----
 
 
